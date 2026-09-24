@@ -1,183 +1,471 @@
-# Kidney-Disease-Classification-MLflow-DVC
+# Kidney Disease Classification
 
+> Deep Learning-based kidney disease classification from medical images with experiment tracking, data versioning, and reproducible ML pipelines.
 
-## Workflows
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)](https://www.python.org/)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-Deep%20Learning-orange?logo=tensorflow)](https://www.tensorflow.org/)
+[![MLflow](https://img.shields.io/badge/MLflow-Experiment%20Tracking-blue)](https://mlflow.org/)
+[![DVC](https://img.shields.io/badge/DVC-Data%20Versioning-purple)](https://dvc.org/)
+[![Docker](https://img.shields.io/badge/Docker-Containerized-blue?logo=docker)](https://www.docker.com/)
+[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-black?logo=github)](https://github.com/features/actions)
 
-1. Update config.yaml
-2. Update secrets.yaml [Optional]
-3. Update params.yaml
-4. Update the entity
-5. Update the configuration manager in src config
-6. Update the components
-7. Update the pipeline 
-8. Update the main.py
-9. Update the dvc.yaml
-10. app.py
+---
 
-# How to run?
-### STEPS:
+## Overview
 
-Clone the repository
+This project implements an end-to-end deep learning pipeline for **kidney disease classification using medical images**.
+
+The system uses a Convolutional Neural Network (CNN) to learn visual patterns from kidney images and classify them into the supported disease categories.
+
+The project is structured around reproducible machine learning practices, including:
+
+* Deep learning-based image classification
+* Modular Python code
+* MLflow experiment tracking
+* DVC-based data and pipeline versioning
+* Configuration-driven training
+* Model versioning
+* Docker support
+* GitHub Actions for automation
+* Web-based prediction interface
+
+The goal of the project is not only to train a model, but to demonstrate how a deep learning model can be organized into a reproducible ML workflow.
+
+---
+
+## Key Features
+
+* 🧠 **CNN-based image classification**
+* 📊 **MLflow experiment tracking**
+* 🔄 **DVC pipeline and data versioning**
+* ⚙️ **Configuration-driven training**
+* 🧩 **Modular project architecture**
+* 🌐 **Web-based prediction interface**
+* 🐳 **Docker support**
+* 🔁 **GitHub Actions workflow**
+* 📁 **Reproducible training pipeline**
+* 🔐 **Environment-based configuration for credentials**
+
+---
+
+## Tech Stack
+
+| Category                   | Technology         |
+| -------------------------- | ------------------ |
+| Programming Language       | Python             |
+| Deep Learning              | TensorFlow / Keras |
+| Experiment Tracking        | MLflow             |
+| Data & Pipeline Versioning | DVC                |
+| Web Application            | Flask              |
+| Containerization           | Docker             |
+| CI/CD                      | GitHub Actions     |
+| Version Control            | Git / GitHub       |
+
+---
+
+## Project Architecture
+
+```text
+                    ┌─────────────────────┐
+                    │    Input Image      │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   Data Processing   │
+                    │  & Preprocessing    │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │    CNN Model        │
+                    │ Training & Testing  │
+                    └──────────┬──────────┘
+                               │
+                  ┌────────────┴────────────┐
+                  ▼                         ▼
+        ┌──────────────────┐      ┌──────────────────┐
+        │     MLflow       │      │       DVC        │
+        │ Experiment       │      │ Data & Pipeline  │
+        │ Tracking         │      │ Versioning       │
+        └──────────────────┘      └──────────────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   Trained Model     │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │  Web Application     │
+                    │   Image Prediction   │
+                    └─────────────────────┘
+```
+
+---
+
+## Repository Structure
+
+```text
+kidney-disease-classification-Platform/
+│
+├── .github/
+│   └── workflows/          # GitHub Actions workflows
+│
+├── config/
+│   └── config.yaml         # Project configuration
+│
+├── research/               # Experiments and development notebooks
+│
+├── src/
+│   └── cnnClassifier/      # Core project modules
+│
+├── templates/              # Web application templates
+│
+├── model/                  # Trained model artifacts
+│
+├── .dvc/
+├── .dvcignore
+├── dvc.yaml                # DVC pipeline definition
+├── dvc.lock                # DVC pipeline lock file
+│
+├── params.yaml             # Training parameters
+├── requirements.txt        # Python dependencies
+├── setup.py                # Package configuration
+├── Dockerfile              # Docker configuration
+├── app.py                  # Web application
+├── main.py                 # Pipeline entry point
+├── scores.json             # Model evaluation results
+└── README.md
+```
+
+---
+
+## Getting Started
+
+### 1. Clone the repository
 
 ```bash
-https://github.com/krishnaik06/Kidney-Disease-Classification-Deep-Learning-Project
+git clone https://github.com/Kanak3064/kidney-disease-classification-Platform.git
+cd kidney-disease-classification-Platform
 ```
-### STEP 01- Create a conda environment after opening the repository
+
+### 2. Create a virtual environment
+
+Using Conda:
 
 ```bash
-conda create -n cnncls python=3.8 -y
+conda create -n kidney-disease python=3.8 -y
+conda activate kidney-disease
 ```
+
+Or using Python's built-in virtual environment:
 
 ```bash
-conda activate cnncls
+python -m venv venv
 ```
 
+Activate it on Windows:
 
-### STEP 02- install the requirements
+```bash
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
+### 4. Run the application
+
 ```bash
-# Finally run the following command
 python app.py
 ```
 
-Now,
-```bash
-open up you local host and port
+Then open:
+
+```text
+http://localhost:8080
 ```
 
+> The exact port may depend on the configuration used by the application.
 
+---
 
+## ML Pipeline
 
+The project follows a modular machine learning workflow:
 
+```text
+Configuration
+     ↓
+Data Ingestion
+     ↓
+Data Validation
+     ↓
+Data Transformation
+     ↓
+Model Training
+     ↓
+Model Evaluation
+     ↓
+Model Saving
+     ↓
+Prediction
+```
+
+Project parameters can be modified through:
+
+```text
+params.yaml
+```
+
+Project-level configuration is maintained through:
+
+```text
+config/config.yaml
+```
+
+---
 
 ## MLflow
 
-- [Documentation](https://mlflow.org/docs/latest/index.html)
+MLflow is used for experiment tracking and model-related metadata.
 
-- [MLflow tutorial](https://youtu.be/qdcHHrsXA48?si=bD5vDS60akNphkem)
+Typical information tracked during experiments can include:
 
-##### cmd
-- mlflow ui
+* Training parameters
+* Model metrics
+* Experiment runs
+* Model artifacts
 
-### dagshub
-[dagshub](https://dagshub.com/)
-
-MLFLOW_TRACKING_URI=https://dagshub.com/entbappy/Kidney-Disease-Classification-MLflow-DVC.mlflow \
-MLFLOW_TRACKING_USERNAME=your_username
-MLFLOW_TRACKING_PASSWORD=your_password
-python script.py
-
-Run this to export as env variables:
+To start the local MLflow interface:
 
 ```bash
-
-export MLFLOW_TRACKING_URI=https://dagshub.com/entbappy/Kidney-Disease-Classification-MLflow-DVC.mlflow
-
-export MLFLOW_TRACKING_USERNAME=<your_mlflow_username>
-
-export MLFLOW_TRACKING_PASSWORD=<your_mlflow_password>
-
+mlflow ui
 ```
 
+Then open the URL displayed by MLflow in your browser.
 
-### DVC cmd
+### Remote MLflow Configuration
 
-1. dvc init
-2. dvc repro
-3. dvc dag
+If you want to use a remote MLflow server, configure credentials through environment variables rather than committing credentials to GitHub.
 
+Example:
 
-## About MLflow & DVC
+```bash
+MLFLOW_TRACKING_URI=<your_tracking_uri>
+MLFLOW_TRACKING_USERNAME=<your_username>
+MLFLOW_TRACKING_PASSWORD=<your_password>
+```
 
-MLflow
+**Never commit real credentials, API keys, passwords, or access tokens to the repository.**
 
- - Its Production Grade
- - Trace all of your expriements
- - Logging & taging your model
+---
 
+## DVC
 
-DVC 
+DVC is used to manage machine learning data and pipeline reproducibility.
 
- - Its very lite weight for POC only
- - lite weight expriements tracker
- - It can perform Orchestration (Creating Pipelines)
+Useful commands:
 
+```bash
+dvc init
+```
 
+Run the pipeline:
 
-# AWS-CICD-Deployment-with-Github-Actions
+```bash
+dvc repro
+```
 
-## 1. Login to AWS console.
+Visualize the pipeline:
 
-## 2. Create IAM user for deployment
+```bash
+dvc dag
+```
 
-	#with specific access
+Check the status of tracked files:
 
-	1. EC2 access : It is virtual machine
+```bash
+dvc status
+```
 
-	2. ECR: Elastic Container registry to save your docker image in aws
+---
 
+## Model
 
-	#Description: About the deployment
+The trained model is intentionally not stored directly in Git when the file size is too large for normal Git version control.
 
-	1. Build docker image of the source code
+For a production implementation, model artifacts can be managed using:
 
-	2. Push your docker image to ECR
+* DVC
+* Cloud object storage
+* MLflow Model Registry
+* Other dedicated model storage
 
-	3. Launch Your EC2 
+---
 
-	4. Pull Your image from ECR in EC2
+## Running Predictions
 
-	5. Lauch your docker image in EC2
+The application accepts an input kidney image and passes it through the trained classification model.
 
-	#Policy:
+The prediction workflow is:
 
-	1. AmazonEC2ContainerRegistryFullAccess
+```text
+Input Image
+     ↓
+Image Validation
+     ↓
+Preprocessing
+     ↓
+CNN Model
+     ↓
+Prediction
+     ↓
+Result
+```
 
-	2. AmazonEC2FullAccess
+---
 
-	
-## 3. Create ECR repo to store/save docker image
-    - Save the URI: 566373416292.dkr.ecr.us-east-1.amazonaws.com/chicken
+## Docker
 
-	
-## 4. Create EC2 machine (Ubuntu) 
+The project includes a `Dockerfile` for containerized execution.
 
-## 5. Open EC2 and Install docker in EC2 Machine:
-	
-	
-	#optinal
+Build the image:
 
-	sudo apt-get update -y
+```bash
+docker build -t kidney-disease-classifier .
+```
 
-	sudo apt-get upgrade
-	
-	#required
+Run the container:
 
-	curl -fsSL https://get.docker.com -o get-docker.sh
+```bash
+docker run -p 8080:8080 kidney-disease-classifier
+```
 
-	sudo sh get-docker.sh
+Then open:
 
-	sudo usermod -aG docker ubuntu
+```text
+http://localhost:8080
+```
 
-	newgrp docker
-	
-# 6. Configure EC2 as self-hosted runner:
-    setting>actions>runner>new self hosted runner> choose os> then run command one by one
+---
 
+## CI/CD
 
-# 7. Setup github secrets:
+GitHub Actions configuration is included under:
 
-    AWS_ACCESS_KEY_ID=
+```text
+.github/workflows/
+```
 
-    AWS_SECRET_ACCESS_KEY=
+The workflow can be used to automate tasks such as:
 
-    AWS_REGION = us-east-1
+* Installing dependencies
+* Running project checks
+* Building Docker images
+* Preparing deployment workflows
 
-    AWS_ECR_LOGIN_URI = demo>>  566373416292.dkr.ecr.ap-south-1.amazonaws.com
+Cloud deployment requires configuring the appropriate credentials and infrastructure separately.
 
-    ECR_REPOSITORY_NAME = simple-app
+---
 
+## Results
 
+The project stores model evaluation information in:
+
+```text
+scores.json
+```
+
+For a production-quality version, additional evaluation metrics can be added here, such as:
+
+* Accuracy
+* Precision
+* Recall
+* F1-score
+* Confusion Matrix
+* ROC-AUC
+
+---
+
+## Screenshots
+
+*Add application screenshots here.*
+
+Recommended screenshots:
+
+1. Application home page
+2. Image upload interface
+3. Prediction result
+4. MLflow experiment dashboard
+
+Example:
+
+```text
+docs/
+├── application.png
+├── prediction.png
+└── mlflow.png
+```
+
+---
+
+## Future Improvements
+
+Planned improvements include:
+
+* [ ] Improve model architecture and validation
+* [ ] Add comprehensive model evaluation
+* [ ] Add prediction confidence visualization
+* [ ] Improve the web interface
+* [ ] Add automated testing
+* [ ] Improve Docker deployment
+* [ ] Add production-grade logging
+* [ ] Integrate a model registry
+* [ ] Deploy the application to a cloud platform
+* [ ] Add monitoring for deployed models
+
+---
+
+## Disclaimer
+
+This project is intended for **educational and research purposes**.
+
+Predictions generated by the model should not be considered a medical diagnosis. Any real-world clinical application would require appropriate medical validation, regulatory compliance, clinical testing, and expert oversight.
+
+---
+
+## Attribution
+
+This repository is an independently maintained version based on an existing open-source/tutorial implementation by **Krish Naik**.
+
+The project has been adapted for personal learning and portfolio development, including repository restructuring, documentation changes, configuration changes, and planned extensions.
+
+Original project:
+
+`https://github.com/krishnaik06/Kidney-Disease-Classification-Deep-Learning-Project`
+
+Please refer to the repository's `LICENSE` file for licensing information.
+
+---
+
+## Author
+
+**Kanak**
+
+GitHub:
+`https://github.com/Kanak3064`
+
+Project Repository:
+`https://github.com/Kanak3064/kidney-disease-classification-Platform`
+
+---
+
+## License
+
+This project is distributed under the license included in the repository.
+
+See [`LICENSE`](LICENSE) for details.
